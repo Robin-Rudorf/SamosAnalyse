@@ -1,0 +1,40 @@
+Pakete installieren
+
+apt-get install \
+build-essential \
+cmake \
+cmake-curses-gui \
+libboost-all-dev \
+libgsl-dev \
+libcgal-dev \
+libvtk9-dev \
+qtbase5-dev \
+bc \
+python3-numpy \
+python3-pandas \
+python3-vtk9 \
+mc \
+screen \
+7zip \
+git
+
+
+# Only for source-doc
+apt-get install doxygen doxygen-latex
+
+--------------------------------------------------------------------------------------------------
+Samos-Installation
+
+tar xfv samos_source_afpolar_cgal6.tar.gz
+
+cd SAMoS
+mkdir build
+cd build
+cmake -Wno-dev ..
+make -j 8 # Need 3GB RAM per Core
+make install
+
+
+echo>>~/.bashrc
+echo 'export PATH=$PATH'":$HOME/samos/bin">>~/.bashrc
+echo 'cd ~/samos'>>~/.bashrc
