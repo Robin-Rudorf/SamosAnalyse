@@ -1,9 +1,10 @@
-Pakete installieren
+All Skripts was developed and tested under Linux Debian 13
+
+Please install the needed packages with the following command as user root: 
 
 apt-get install \
 build-essential \
 cmake \
-cmake-curses-gui \
 libboost-all-dev \
 libgsl-dev \
 libcgal-dev \
@@ -18,23 +19,33 @@ screen \
 7zip \
 git
 
-
-# Only for source-doc
-apt-get install doxygen doxygen-latex
-
 --------------------------------------------------------------------------------------------------
 Samos-Installation
 
-tar xfv samos_source_afpolar_cgal6.tar.gz
+mkdir ~/samos_inst
+cd ~/samos_inst
+
+git clone https://github.com/Robin-Rudorf/SAMoS.git
+git clone https://github.com/Robin-Rudorf/SamosAnalyse.git
 
 cd SAMoS
 mkdir build
 cd build
 cmake -Wno-dev ..
-make -j 8 # Need 3GB RAM per Core
+make -j 8 # Need 3GB RAM per CPU-Core (-j: CPU-Cores for make)
 make install
+
+
+cp -r ~/samos_inst/SamosAnalyse/Compute_Order_Skript ~/samos/
+cd ~/samos/Compute_Order_Skript
+chmod 0755 *.py
+chmod 0755 *.sh
+cd python_utils
+chmod 0755 targz-utils.sh
+./targz-utils.sh
+cd ..
+rm -r python_utils
 
 
 echo>>~/.bashrc
 echo 'export PATH=$PATH'":$HOME/samos/bin">>~/.bashrc
-echo 'cd ~/samos'>>~/.bashrc
