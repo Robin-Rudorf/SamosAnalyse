@@ -111,13 +111,6 @@ samos_log="${dir_analyse}/Pickles_Log.txt"
 python_utils="${topdir}/python_utils"
 
 # Test, ob Dateien vorhanden
-if [ ! -f "${topdir_runs}/analyse/backup_compute_order.csv" ];then
-  echo Datei "${topdir_runs}/analyse/backup_compute_order.csv" nicht gefunden.
-  echo
-  read -t 60 -r -s -n1 -p "Beenden mit beliebiger Taste "
-  echo
-  exit
-fi
 
 if [ ! -f "${dir_list}/all.txt" ];then
   echo Datei "${dir_list}/all.txt" nicht gefunden.
@@ -128,7 +121,12 @@ if [ ! -f "${dir_list}/all.txt" ];then
 fi
 
 cp_err=0
-cp "${topdir_runs}/analyse/backup_compute_order.csv" "${cpo_csv}" ||cp_err=1
+if [ -f "${topdir_runs}/analyse/backup_compute_order.csv" ];then
+  cp "${topdir_runs}/analyse/backup_compute_order.csv" "${cpo_csv}" ||cp_err=1
+else
+  cp "${topdir_runs}/analyse/compute_order.csv" "${cpo_csv}" ||cp_err=1
+fi
+
 cp "${topdir_runs}/sort_plot.sh" "${topdir}/" ||cp_err=1
 cp "${topdir_runs}/sort_avg_plot.sh" "${topdir}/" ||cp_err=1
 
