@@ -39,10 +39,10 @@ make install
 
 cp -r ~/samos_inst/SamosAnalyse/Compute_Order_Skript ~/samos/
 cd ~/samos/Compute_Order_Skript
-chmod 0755 *.py
-chmod 0755 *.sh
+chmod +x *.py
+chmod +x *.sh
 cd python_utils
-chmod 0755 targz-utils.sh
+chmod +x targz-utils.sh
 ./targz-utils.sh
 cd ..
 rm -r python_utils
@@ -50,4 +50,5 @@ rm -r python_utils
 
 echo>>~/.bashrc
 echo 'export PATH=$PATH'":$HOME/samos/bin">>~/.bashrc
+
 
