@@ -129,6 +129,7 @@ fi
 
 cp "${topdir_runs}/sort_plot.sh" "${topdir}/" ||cp_err=1
 cp "${topdir_runs}/sort_avg_plot.sh" "${topdir}/" ||cp_err=1
+cp "${topdir_runs}/zip-runs.sh" "${topdir}/" ||cp_err=1
 
 if [ ${cp_err} -ne 0 ];then
   echo
@@ -268,7 +269,7 @@ if [ "${zip_runs}" == "1" ];then
   touch "${dir_analyse}/Samos_Log.txt"
   echo
   echo Start zip-runs.sh
-  "${topdir_runs}/zip-runs.sh" skriptstart analyse || zip_runs_err=1
+  "${topdir}/zip-runs.sh" skriptstart analyse || zip_runs_err=1
   rm "${dir_analyse}/Samos_Log.txt"
 fi
 
