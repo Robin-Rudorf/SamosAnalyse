@@ -14,10 +14,11 @@ bc \
 python3-numpy \
 python3-pandas \
 python3-vtk9 \
-mc \
 screen \
 7zip \
 git
+
+It is helpful when you install the "midnight commander" (apt-get install mc) 
 
 --------------------------------------------------------------------------------------------------
 Samos-Installation
@@ -49,3 +50,4 @@ rm -r python_utils
 
 echo>>~/.bashrc
 echo 'export PATH=$PATH'":$HOME/samos/bin">>~/.bashrc
+
