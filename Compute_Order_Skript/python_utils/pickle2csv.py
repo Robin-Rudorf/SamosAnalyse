@@ -78,27 +78,25 @@ with open(dir_pickle+"pickle.csv") as f:
         if "[line]" in Split:
             csv_name=csv_name+";line_"+row[8]
 
-        for i in range(len(tplot)):
-            if tplot[i]!=tval[i]:
-                sys.stderr.write(picklefile+"\n")
-                sys.stderr.write("tplot!=tval\n")
-                Error=1
-                break
+        with open(csv_name+csv_ext, "a") as f:
+            for i in range(len(tplot)):
+                if tplot[i]!=tval[i]:
+                    sys.stderr.write(picklefile+"\n")
+                    sys.stderr.write("tplot!=tval\n")
+                    Error=1
+                    break
 
-            csv_zeile=""
-            for j in range(9):
-                csv_zeile=csv_zeile+row[j]+","
-            csv_zeile=csv_zeile+str(tval[i])+","
-            csv_zeile=csv_zeile+str(msd[i])+","
-            csv_zeile=csv_zeile+str(SelfInt[i])+","
-            csv_zeile=csv_zeile+str(len(tplot))
+                csv_zeile=""
+                for j in range(9):
+                    csv_zeile=csv_zeile+row[j]+","
+                csv_zeile=csv_zeile+str(tval[i])+","
+                csv_zeile=csv_zeile+str(msd[i])+","
+                csv_zeile=csv_zeile+str(SelfInt[i])+","
+                csv_zeile=csv_zeile+str(len(tplot))
 
-
-            with open(csv_name+csv_ext, "a") as f:
                 f.write(csv_zeile+'\n')
-                f.close()
                 Zeilen=Zeilen+1
-
+            f.close()
 
 print("CSV-Format: cc,rand,tau,v,k,nu,gamma,permult,line,Time,MSD,SelfInt,DataCount")
 print("Written "+str(Zeilen)+" lines in "+csv_out+csv_ext)
