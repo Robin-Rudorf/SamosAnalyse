@@ -132,6 +132,7 @@ do
   fi
 
   python3 ../python_utils/plot_runs.py --csv ${filename} --output "${output_prefix}O_mean.png" --title "${Dir_Name} ${sort_name}" --x ${xwert} --y O_mean --group ${group} --xsize ${x_size} --cmap ${d_cmap} --ms ${markersize}|| plot_err=1
+  python3 ../python_utils/plot_runs.py --csv ${filename} --output "${output_prefix}O_var.png" --title "${Dir_Name} ${sort_name}" --x ${xwert} --y O_var --group ${group} --xsize ${x_size} --cmap ${d_cmap} --ms ${markersize}|| plot_err=1
   python3 ../python_utils/color_plot_runs.py --csv ${filename} --output "${output_prefix}O_mean_col.png" --title "${Dir_Name} ${sort_name}" --xcol ${xwert} --wcol O_mean --ycol ${group} --xsize ${color_x_size} --ysize ${color_y_size} --colormap ${colormap} --scatter ${color_scatter} || plot_err=1
 
   if [ -f alpha_relaxation_time.csv ];then
