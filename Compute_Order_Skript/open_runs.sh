@@ -6,7 +6,7 @@
 
 ## Author: Thomas Rudorf
 ## thomasrudorf@gmx.de
-## Date: 18.01.2025
+## Date: 01.04.2026
 
 ## csv-Datei-Format (compute-order):  cc,rand,tau,v,k,nu,gamma,permult,line,O_mean,O_var,frames_ok
 
@@ -217,7 +217,7 @@ do
   do
     if [ ! -f "${dir_input}/0.1.input" ];then
       sleep 0.1 # for random via time
-      python3 "${python_utils}/generate_avm_ic.py" ${cellcount} -o "${dir_input}/${cellcount}.${random}"
+      python3 "${python_utils}/generate_avm_ic.py" ${cellcount} -o "${dir_input}/${cellcount}.${random}" --vinit ${v_init} --vvalue ${v_value}
     fi
     infile="${cellcount}.${random}.input"
     infile_bound="${cellcount}.${random}.boundary"

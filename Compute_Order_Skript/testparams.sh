@@ -2,7 +2,7 @@
 ## Parameter-Test for open_runs.config
 ## Author: Thomas Rudorf
 ## thomasrudorf@gmx.de
-## Date: 31.12.2025
+## Date: 01.04.2026
 
 clear
 if [ ! -f open_runs.config ];then
@@ -139,6 +139,8 @@ echo "Runtime:               '${trun}'"
 echo "Skip for Pickles:      '${skip}' ($((${skip}*${freq})))"
 echo "Skip for C-Order:      '${skip_cpo}' ($((${skip_cpo}*${freq})))"
 echo "Frequenz:              '${freq}'"
+echo "V init:                '${v_init}'"
+echo "V value:               '${v_value}'"
 echo
 if [ "${fertig_mail}" != "" ];then
   echo "Mail wenn fertig: ${fertig_mail}"
