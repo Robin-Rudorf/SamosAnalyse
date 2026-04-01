@@ -18,6 +18,17 @@ import math
 import random
 import argparse
 
+# ======================
+# USER TOGGLES
+# ======================
+
+# Boundary polarity initialization:
+#  - 'radial'  : (nx,ny) points outward (current behavior)
+#  - 'tangent' : (nx,ny) tangent to the boundary circle
+#  - 'random'  : random direction per boundary particle
+BOUNDARY_POLARITY_MODE = "random"
+# ======================
+
 
 def generate_hex_positions(n_cells, A0=3.0):
     """
@@ -60,6 +71,8 @@ def write_input_and_boundary(
     prefix="epi_init",
     A0=3.0,
     seed=None,
+    init_vel_polar=False,
+    vel_eps=1e-3,
 ):
     """
     Schreibe <prefix>.input und <prefix>.boundary für n_cells Zellen.
@@ -90,6 +103,7 @@ def write_input_and_boundary(
         for pid, (x, y) in enumerate(positions):
             radius = random.uniform(0.85, 1.15)
             z = 0.0
+            # Initial velocity: keep zero (default) or set along polarity to avoid v=0 for pair_velocity
             vx = vy = vz = 0.0
 
             # Zufällige in-plane Orientierung
@@ -97,6 +111,11 @@ def write_input_and_boundary(
             nx = math.cos(phi)
             ny = math.sin(phi)
             nz = 0.0
+
+            if init_vel_polar:
+                vx = vel_eps * nx
+                vy = vel_eps * ny
+                vz = 0.0
 
             # Sheet-Normalenvektor
             nvx = 0.0
@@ -126,12 +145,28 @@ def write_input_and_boundary(
 
             radius = random.uniform(0.85, 1.15)
             z = 0.0
+            # Initial velocity: keep zero (default) or set along polarity to avoid v=0 for pair_velocity
             vx = vy = vz = 0.0
 
-            # radialer Normalenvektor im Sheet
-            nx = math.cos(angle)
-            ny = math.sin(angle)
+            # Boundary polarity in the sheet
+            if BOUNDARY_POLARITY_MODE == "radial":
+                nx = math.cos(angle)
+                ny = math.sin(angle)
+            elif BOUNDARY_POLARITY_MODE == "tangent":
+                nx = -math.sin(angle)
+                ny =  math.cos(angle)
+            elif BOUNDARY_POLARITY_MODE == "random":
+                phi = 2.0 * math.pi * random.random()
+                nx = math.cos(phi)
+                ny = math.sin(phi)
+            else:
+                raise ValueError(f"Unknown BOUNDARY_POLARITY_MODE={BOUNDARY_POLARITY_MODE!r}")
             nz = 0.0
+
+            if init_vel_polar:
+                vx = vel_eps * nx
+                vy = vel_eps * ny
+                vz = 0.0
 
             nvx = 0.0
             nvy = 0.0
@@ -193,12 +228,33 @@ def main():
         help="Zufallsseed für reproduzierbare Konfigurationen",
     )
 
+    parser.add_argument(
+        "--vinit",
+        type=int,
+        default=0,
+        help="Anfangsgeschwindigkeit 0, 1",
+    )
+
+    parser.add_argument(
+        "--vvalue",
+        type=float,
+        default=1e-3,
+        help="Anfangsgeschwindigkeit Wert",
+    )
+
     args = parser.parse_args()
+
+    v_init=False
+    if args.vinit==1:
+        v_init=True
+
     write_input_and_boundary(
         n_cells=args.n_cells,
         prefix=args.prefix,
         A0=args.area,
         seed=args.seed,
+        init_vel_polar=v_init,
+        vel_eps=args.vvalue,
     )
 
 
